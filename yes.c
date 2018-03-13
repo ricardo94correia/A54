@@ -90,6 +90,20 @@ int sensorread(void){
 	Bat=strtol(str, NULL, 16);
 	battery=(float)(Bat/(float)(4096))*1.5*2;
 	printf("Mote Battery: %.2f V\n", battery);
+	//Visible Light
+	str = strtok(NULL, s);
+	str1 = strtok(NULL, s);
+	str = strcat( str, str1);
+	Lig =strtol(str, NULL, 16);
+	light = (float) 0.625 * 1000000 * (((float) Lig)/4096)*(1.5 / 100000) * 1000;
+	printf("Light: %.2f lux\n", light);
+	//Infrared Light
+	str = strtok(NULL, s);
+	str1 = strtok(NULL, s);
+	str = strcat( str, str1);
+	Red =strtol(str, NULL, 16);
+	redlig = 0.769 * 100000 * (((float) Red)/4096) * (1.5/100000) * 1000;
+	printf("Red Light: %.2f lux\n", redlig);
 	//Temperature
 	str = strtok(NULL, s);
 	str1 = strtok(NULL, s);
@@ -105,20 +119,6 @@ int sensorread(void){
 	humid = (float) -2.0468 + (0.0367 * (float) Hum) - ((1.5955 * ((float) Hum) * ((float) Hum))/1000000) ;
 	humid = (float) (temper - 25) * (0.01 + (0.00008 * ((float) Hum))) + humid;
 	printf("Humidity: %.2f %%\n", humid);
-	//Visible Light
-	str = strtok(NULL, s);
-	str1 = strtok(NULL, s);
-	str = strcat( str, str1);
-	Lig =strtol(str, NULL, 16);
-	light = (float) 0.625 * 1000000 * (((float) Lig)/4096)*(1.5 / 100000) * 1000;
-	printf("Light: %.2f lux\n", light);
-	//Infrared Light
-	str = strtok(NULL, s);
-	str1 = strtok(NULL, s);
-	str = strcat( str, str1);
-	Red =strtol(str, NULL, 16);
-	redlig = 0.769 * 100000 * (((float) Red)/4096) * (1.5/100000) * 1000;
-	printf("Red Light: %.2f lux\n", redlig);
 	while(strcmp(str, "7E")!=0){
 		str = strtok(NULL, s);
 	}
@@ -256,6 +256,6 @@ void control(int room){
 
 int main(){
 	int k;
-	k=definevalues();
+	k=sensorread();
 	return 0;
 }
