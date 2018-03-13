@@ -59,6 +59,7 @@ void sensorread(void){
 	int ready=0, counter=0;
 	
 	while(1){
+	sleep(1);
 	fgets(name, 100, stdin);
 	//FIND Begining of message
 	str = strtok(name, s);
